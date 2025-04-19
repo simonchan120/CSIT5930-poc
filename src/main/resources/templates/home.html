@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>JDBM Sample</title>
+</head>
+<body>
+<h1>Run JDBM Sample</h1>
+<form action="/api/run-main" method="get">
+    <button type="submit">Run JDBM Logic</button>
+</form>
+<div>
+    <span>A welcome message should be shown if thymeleaf is working:</span>
+<span th:text="#{welcome.message}" />
+</div>
+<form th:action="@{/process}" method="get">
+    <label for="txtname">Please enter a list of words, separated by space:</label><br>
+    <input type="text" id="txtname" name="txtname" required>
+    <input type="submit" value="Submit">
+</form>
+
+
+<h1>Admin stuff</h1>
+<ul>
+    <li><a href="/crawler">Crawler</a></li>
+    <li><a href="/indexer">Indexer</a></li>
+</ul>
+</body>
+</html>

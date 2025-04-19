@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+    <title>Lab 4</title>
+</head>
+<body>
+<h1>DEBUGGING IN lab4.html</h1>
+<form th:action="@{/process}" method="get">
+    <label for="txtname">Please enter a list of words, separated by space:</label><br>
+    <input type="text" id="txtname" name="txtname" required>
+    <input type="submit" value="Submit">
+</form>x
+
+<div th:if="${txtname != null}">
+    <h2>Results for: <span th:text="${txtname}"></span></h2>
+    <ul>
+        <li th:each="word : ${words}" th:text="${word}"></li>
+    </ul>
+
+    <div th:each="webpage : ${results}">
+        <h3>Page Title: <span th:text="${webpage.title}"></span></h3>
+        <p>URL: <span th:text="${webpage.url}"></span></p>
+        <p>Last Modified Date: <span th:text="${webpage.formattedDate}"></span></p>
+        <p>Size of Page:
+            <span th:if="${webpage.pageSize >= 0}" th:text="${webpage.pageSize}"></span>
+            <span th:if="${webpage.pageSize < 0}">IS NOT FOUND</span>
+        </p>
+        <h4>Words in Page:</h4>
+        <p>
+            <span th:each="word : ${webpage.content}" th:text="${word + ' '}"></span>
+        </p>
+        <h4>Parent Links:</h4>
+        <div th:if="${webpage.parentLinks.size() > 0}">
+            <ul>
+                <li th:each="parentLink, iterStat : ${webpage.parentLinks}">
+                    Parent link <span th:text="${iterStat.index + 1}"></span>:
+                    <span th:text="${parentLink}"></span>
+                </li>
+            </ul>
+        </div>
+        <div th:if="${webpage.parentLinks.size() == 0}">
+            <p>No Parent Link of this link</p>
+        </div>
+        <h4>Child Links:</h4>
+        <ul>
+            <li th:each="childLink, iterStat : ${webpage.childLinks}">
+                Child link <span th:text="${iterStat.index + 1}"></span>:
+                <span th:text="${childLink}"></span>
+            </li>
+        </ul>
+    </div>
+</div>
+</body>
+</html>
